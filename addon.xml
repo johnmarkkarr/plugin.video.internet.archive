@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.internet-archive" name="the Internet Archive" version="0.0.1" provider-name="johnmarkkarr">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
+    <import addon="script.module.beautifulsoup4" version="4.5.3" />
+    <import addon="script.module.lxml" version="2.12.4" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video audio image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">Accesses video, audio, and images from the Internet Archive.</summary>
+    <description lang="en_gb">Accesses video, audio, and images from the Internet Archive.</description>
+    <disclaimer lang="en_gb">Download and install the lxml binary to speed up the add-on.</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license>The Unlicense</license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source>https://github.com/johnmarkkarr/plugin.video.internet.archive</source>
+    <news></news>
+    <assets>
+        <icon></icon>
+        <fanart></fanart>
+        <screenshot></screenshot>
+    </assets>
+  </extension>
+</addon>
