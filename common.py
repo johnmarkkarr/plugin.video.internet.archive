@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 import xbmcaddon
-
 import urllib
 import urlparse
 import requests
