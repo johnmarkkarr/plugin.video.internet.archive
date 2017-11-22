@@ -4,6 +4,7 @@ import xbmcaddon
 import urllib
 import urlparse
 import requests
+import json
 import os
 
 class Media(object):
