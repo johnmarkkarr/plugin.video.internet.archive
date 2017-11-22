@@ -16,24 +16,31 @@ class Media(object):
         if type == 2:
             return Image()
 
-    def filter(self, items):
+    def filter(self, items, sort):
         results = []
         for format in self.FORMATS:
             if format in items:
-                results.extend(items[format])
+                if sort:
+                    items[format].sort(key=lambda item: item[1].getLabel())
+                    results.extend(items[format])
+                else:
+                    results.extend(items[format])
         return results
 
 class Video(Media):
     FORMATS = ['mpeg', 'mp4', 'ogv', 'ogg', 'mkv', 'm4a']
     TYPE = 'movies'
+    INFO = 'video'
 
 class Audio(Media):
     FORMATS = ['ogg', 'mp3', 'oga', 'wav', 'mid', 'midi', 'flac', 'aiff', 'aac', 'shn']
     TYPE = 'songs'
+    INFO = 'music'
 
 class Image(Media):
     FORMATS = ['png', 'jpg', 'jpeg', 'jp2', 'tiff', 'gif', 'bmp']
     TYPE = 'images'
+    INFO = 'pictures'
 
 class Addon(object):
     TYPES = {'video': 0, 'audio': 1, 'image': 2}

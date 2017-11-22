@@ -116,6 +116,7 @@ elif kind == 'item':
     items = {}
     formats = set(media.FORMATS)
     try:
+        sort = False
         for file in data['files']:
             format = file['name'].split('.')[-1].lower()
             if format in formats and 'Thumb' not in file['format']:
@@ -127,13 +128,16 @@ elif kind == 'item':
                 else:
                     title = (file['name'] + ' ' + file['format']).encode('utf-8')
                 li = xbmcgui.ListItem(title, iconImage='DefaultVideo.png')
-                li.setInfo('pictures', {'title': title})
+                li.setInfo(media.INFO, {'title': title})
                 actions = []
-                actions.append(('Add to favorites', 'RunPlugin(' + buildURL(addon.home, {'kind': 'addFavorite', 'url': downloadURL, 'title': addon.args['name'], 'base': addon.args['base'], 'folder': 0}) + ')'))
+                actions.append(('Add to Favorites', 'RunPlugin(' + buildURL(addon.home, {'kind': 'addFavorite', 'url': downloadURL, 'title': addon.args['name'], 'base': addon.args['base'], 'folder': 0}) + ')'))
+                if not sort:
+                    actions.append(('Sort Alphabetically', 'Container.Update("' + buildURL(addon.home, {'kind': 'item', 'url': addon.args['url'], 'name': addon.args['name'], 'base': addon.args['base'], 'sort': 1}) + '", "' + buildURL(addon.home, {'kind': 'item', 'url': addon.args['url'], 'name': addon.args['name'], 'base': addon.args['base']}) + '")'))
+                    sort = True
                 li.addContextMenuItems(actions, replaceItems=True)
                 items[format].append((downloadURL, li, False))
     except Exception as e:
         xbmcgui.Dialog().notification('Results', 'Could not display results.', xbmcgui.NOTIFICATION_ERROR, 5000)
-    items = media.filter(items)
+    items = media.filter(items, bool(int(addon.args['sort'])))
     xbmcplugin.addDirectoryItems(addon.handle, items)
     xbmcplugin.endOfDirectory(addon.handle)

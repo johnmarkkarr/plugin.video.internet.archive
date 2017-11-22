@@ -70,7 +70,7 @@ def buildListFromURL(addon, url=None, query={}):
             else:
                 info = item.find(class_='item-ttl').find('a')
                 title = info['title'].encode('utf-8')
-                url = buildURL(addon.home, {'kind': 'item', 'name': title, 'url': info['href'].replace('/details', '/metadata', 1), 'base': addon.args['base']})
+                url = buildURL(addon.home, {'kind': 'item', 'name': title, 'url': info['href'].replace('/details', '/metadata', 1), 'base': addon.args['base'], 'sort': 0})
             li = xbmcgui.ListItem(title, iconImage='DefaultFolder.png')
             actions = []
             actions.append(('Add to favorites', 'RunPlugin(' + buildURL(addon.home, {'kind': 'addFavorite', 'url': url, 'title': title, 'base': addon.args['base'], 'folder': 1}) + ')'))
