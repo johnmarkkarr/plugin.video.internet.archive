@@ -6,8 +6,6 @@ import xbmcplugin
 import os
 import sys
 import json
-import urllib
-import urlparse
 import md5
 
 import lists
