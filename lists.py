@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 import xbmcgui
 import sys
-import requests
 import md5
 from bs4 import BeautifulSoup
 
