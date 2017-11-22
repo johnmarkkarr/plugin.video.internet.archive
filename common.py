@@ -21,9 +21,7 @@ class Media(object):
             if format in items:
                 if sort:
                     items[format].sort(key=lambda item: item[1].getLabel())
-                    results.extend(items[format])
-                else:
-                    results.extend(items[format])
+                results.extend(items[format])
         return results
 
 class Video(Media):
