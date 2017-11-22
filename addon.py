@@ -9,7 +9,7 @@ import json
 import md5
 
 import lists
-from common import buildURL, makeRequest, Media, Addon
+from common import buildURL, makeRequest, openFavorites, Media, Addon
 
 addon = Addon(*sys.argv)
 kind = addon.args.get('kind', None)
@@ -47,30 +47,12 @@ elif kind == 'browse':
     xbmcplugin.addDirectoryItems(addon.handle, items)
     xbmcplugin.endOfDirectory(addon.handle)
 elif kind == 'favorites':
-    path = os.path.join(xbmc.translatePath(addon.addon.getAddonInfo('profile')), 'favorites.json')
-    try:
-        file = open(path, 'r')
-    except IOError:
-        file = open(path, 'w')
-    try:
-        favorites = json.load(file)
-    except:
-        favorites = [[], [], []]
+    favorites = openFavorites(addon)
     items = lists.buildListFromList(addon, favorites[int(addon.args['base'])])
     xbmcplugin.addDirectoryItems(addon.handle, items)
     xbmcplugin.endOfDirectory(addon.handle)
-    file.close()
 elif kind == 'addFavorite':
-    path = os.path.join(xbmc.translatePath(addon.addon.getAddonInfo('profile')), 'favorites.json')
-    try:
-        file = open(path, 'r')
-    except IOError:
-        file = open(path, 'w')
-    try:
-        favorites = json.load(file)
-    except:
-        favorites = [[], [], []]
-    file.close()
+    favorites = openFavorites(addon)
     keyboard = xbmc.Keyboard(addon.args['title'], 'Name it')
     keyboard.doModal()
     title = ''

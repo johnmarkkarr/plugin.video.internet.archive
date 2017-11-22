@@ -75,3 +75,16 @@ def makeRequest(url):
     except requests.HTTPError as e:
         return (False, e.message)
     return (True, raw)
+
+def openFavorites(addon):
+    path = os.path.join(xbmc.translatePath(addon.addon.getAddonInfo('profile')), 'favorites.json')
+    try:
+        file = open(path, 'r')
+    except IOError:
+        file = open(path, 'w')
+    try:
+        favorites = json.load(file)
+    except:
+        favorites = [[], [], []]
+    file.close()
+    return favorites
