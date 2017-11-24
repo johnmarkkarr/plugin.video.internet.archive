@@ -87,7 +87,7 @@ elif kind == 'picks':
         xbmcgui.Dialog().notification('Results', response, xbmcgui.NOTIFICATION_ERROR, 5000)
         sys.exit(1)
     picks = json.loads(response.text)
-    items = lists.buildListFromList(addon, picks[int(addon.args['base'])])
+    items = lists.buildListFromList(addon, picks[int(addon.args['base'])], remove=False)
     xbmcplugin.addDirectoryItems(addon.handle, items)
     xbmcplugin.endOfDirectory(addon.handle)
 elif kind == 'item':

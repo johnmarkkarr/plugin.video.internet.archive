@@ -16,7 +16,7 @@ class Pager(object):
             self.page += 1
         self.start = self.idx * 25 + 1
 
-def buildListFromList(addon, src):
+def buildListFromList(addon, src, remove=True):
     pager = Pager(addon.args)
     length = len(src)
     stop = False
@@ -29,9 +29,10 @@ def buildListFromList(addon, src):
             items.append((item['url'], li, True))
         else:
             items.append((item['url'], li, False))
-        actions = []
-        actions.append(('Remove from favorites', 'RunPlugin(' + buildURL(addon.home, {'kind': 'removeFavorite', 'id': md5.md5(item['title']).hexdigest(), 'base': addon.args['base']}) + ')'))
-        li.addContextMenuItems(actions, replaceItems=True)
+        if remove:
+            actions = []
+            actions.append(('Remove from favorites', 'RunPlugin(' + buildURL(addon.home, {'kind': 'removeFavorite', 'id': md5.md5(item['title']).hexdigest(), 'base': addon.args['base']}) + ')'))
+            li.addContextMenuItems(actions, replaceItems=True)
     if not stop:
         url = buildURL(addon.home, {'kind': 'favorites', 'name': 'next page', 'page': pager.page, 'idx': pager.idx + 1, 'base': addon.args['base']})
         li = xbmcgui.ListItem('next page', iconImage='DefaultFolder.png')
