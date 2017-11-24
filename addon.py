@@ -82,7 +82,14 @@ elif kind == 'removeFavorite':
         file.close()
         xbmcgui.Dialog().notification('Favorites', 'Removed from favorites.', xbmcgui.NOTIFICATION_INFO, 5000)
 elif kind == 'picks':
-    pass
+    success, response = makeRequest(addon.picksURL)
+    if not success:
+        xbmcgui.Dialog().notification('Results', response, xbmcgui.NOTIFICATION_ERROR, 5000)
+        sys.exit(1)
+    picks = json.loads(response.text)
+    items = lists.buildListFromList(addon, picks[int(addon.args['base'])])
+    xbmcplugin.addDirectoryItems(addon.handle, items)
+    xbmcplugin.endOfDirectory(addon.handle)
 elif kind == 'item':
     media = Media.factory(int(addon.args['base']))
     xbmcplugin.setContent(addon.handle, media.TYPE)

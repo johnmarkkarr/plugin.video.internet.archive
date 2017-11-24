@@ -52,6 +52,7 @@ class Addon(object):
         self.home = home
         self.handle = int(handle)
         self.args = {}
+        self.picksURL = 'https://raw.githubusercontent.com/johnmarkkarr/plugin.video.internet.archive/master/picks.json'
         args = urlparse.parse_qs(args[1:])
         for key in args:
             self.args[key] = args[key][0]
