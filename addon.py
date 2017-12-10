@@ -47,12 +47,12 @@ elif kind == 'browse':
     xbmcplugin.addDirectoryItems(addon.handle, items)
     xbmcplugin.endOfDirectory(addon.handle)
 elif kind == 'favorites':
-    favorites = openFavorites(addon)
+    favorites, _ = openFavorites(addon)
     items = lists.buildListFromList(addon, favorites[int(addon.args['base'])])
     xbmcplugin.addDirectoryItems(addon.handle, items)
     xbmcplugin.endOfDirectory(addon.handle)
 elif kind == 'addFavorite':
-    favorites = openFavorites(addon)
+    favorites, path = openFavorites(addon)
     keyboard = xbmc.Keyboard(addon.args['title'], 'Name it')
     keyboard.doModal()
     title = ''

@@ -5,6 +5,7 @@ import urllib
 import urlparse
 import requests
 import json
+import xbmc
 import os
 
 class Media(object):
@@ -77,7 +78,12 @@ def makeRequest(url):
     return (True, raw)
 
 def openFavorites(addon):
-    path = os.path.join(xbmc.translatePath(addon.addon.getAddonInfo('profile')), 'favorites.json')
+    dir = xbmc.translatePath(addon.addon.getAddonInfo('profile'))
+    try:
+        os.mkdir(dir)
+    except OSError:
+        pass
+    path = os.path.join(dir, 'favorites.json')
     try:
         file = open(path, 'r')
     except IOError:
@@ -87,4 +93,4 @@ def openFavorites(addon):
     except:
         favorites = [[], [], []]
     file.close()
-    return favorites
+    return favorites, path
